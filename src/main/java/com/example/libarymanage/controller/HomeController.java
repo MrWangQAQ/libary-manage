@@ -17,8 +17,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@Component
-@Controller
 @RequestMapping("/")
 public class HomeController {
 
