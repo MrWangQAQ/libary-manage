@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.libarymanage.dao.mapper.BookInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.libarymanage.entity.BookInfo">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="book_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="translator" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="isbn_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="comeup_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="publish_company" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="state" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="entering_men" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="entering_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.libarymanage.entity.BookInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into book_info (book_name, author, translator, 
+      isbn_code, comeup_time, publish_company, 
+      state, entering_men, entering_date
+      )
+    values (#{bookName,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{translator,jdbcType=VARCHAR}, 
+      #{isbnCode,jdbcType=VARCHAR}, #{comeupTime,jdbcType=TIMESTAMP}, #{publishCompany,jdbcType=VARCHAR}, 
+      #{state,jdbcType=BIT}, #{enteringMen,jdbcType=VARCHAR}, #{enteringDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.libarymanage.entity.BookInfo">
+    update book_info
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      translator = #{translator,jdbcType=VARCHAR},
+      isbn_code = #{isbnCode,jdbcType=VARCHAR},
+      comeup_time = #{comeupTime,jdbcType=TIMESTAMP},
+      publish_company = #{publishCompany,jdbcType=VARCHAR},
+      state = #{state,jdbcType=BIT},
+      entering_men = #{enteringMen,jdbcType=VARCHAR},
+      entering_date = #{enteringDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, book_name, author, translator, isbn_code, comeup_time, publish_company, 
+    state, entering_men, entering_date
+    from book_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, book_name, author, translator, isbn_code, comeup_time, publish_company, 
+    state, entering_men, entering_date
+    from book_info
+  </select>
+</mapper>

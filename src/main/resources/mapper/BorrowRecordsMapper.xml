@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.libarymanage.dao.mapper.BorrowRecordsMapper">
+  <resultMap id="BaseResultMap" type="com.example.libarymanage.entity.BorrowRecords">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="book_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="book_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="borrow_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="should_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="return_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="state" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from borrow_records
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.libarymanage.entity.BorrowRecords">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into borrow_records (user_id, book_id, book_name, 
+      borrow_time, should_time, return_time, 
+      state)
+    values (#{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, 
+      #{borrowTime,jdbcType=TIMESTAMP}, #{shouldTime,jdbcType=TIMESTAMP}, #{returnTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.libarymanage.entity.BorrowRecords">
+    update borrow_records
+    set user_id = #{userId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=INTEGER},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      borrow_time = #{borrowTime,jdbcType=TIMESTAMP},
+      should_time = #{shouldTime,jdbcType=TIMESTAMP},
+      return_time = #{returnTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, book_id, book_name, borrow_time, should_time, return_time, state
+    from borrow_records
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, book_id, book_name, borrow_time, should_time, return_time, state
+    from borrow_records
+  </select>
+</mapper>

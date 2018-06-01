@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.libarymanage.dao.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.libarymanage.entity.UserInfo">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="departments" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="major" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="max" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="time" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="lended_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.libarymanage.entity.UserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_info (user_id, departments, major, 
+      phone, email, max, 
+      time, lended_num)
+    values (#{userId,jdbcType=INTEGER}, #{departments,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{max,jdbcType=INTEGER}, 
+      #{time,jdbcType=INTEGER}, #{lendedNum,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.libarymanage.entity.UserInfo">
+    update user_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      departments = #{departments,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      max = #{max,jdbcType=INTEGER},
+      time = #{time,jdbcType=INTEGER},
+      lended_num = #{lendedNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, departments, major, phone, email, max, time, lended_num
+    from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, departments, major, phone, email, max, time, lended_num
+    from user_info
+  </select>
+</mapper>

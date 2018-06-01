@@ -1,36 +1,39 @@
 package com.example.libarymanage.entity;
 
 public class User {
-    private Integer id;
+    private String id;
 
-    private String name;
+    private String userName;
 
     private String password;
 
-    public User(Integer id, String name, String password) {
+    private String userNumber;
+
+    public User(String id, String userName, String password, String userNumber) {
         this.id = id;
-        this.name = name;
+        this.userName = userName;
         this.password = password;
+        this.userNumber = userNumber;
     }
 
     public User() {
         super();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getPassword() {
@@ -39,5 +42,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber == null ? null : userNumber.trim();
     }
 }
