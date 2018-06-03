@@ -13,4 +13,6 @@ public interface SystemAdminMapper {
     List<SystemAdmin> selectAll();
 
     int updateByPrimaryKey(SystemAdmin record);
+
+    SystemAdmin selectByAdminName(String adminName);
 }

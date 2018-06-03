@@ -40,4 +40,9 @@
     select id, admin_name, admin_password, admin_phone, admin_email
     from system_admin
   </select>
+  <select id="selectByAdminName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, admin_name, admin_password, admin_phone, admin_email
+    from system_admin
+    where admin_name = #{admin_name,jdbcType=VARCHAR}
+  </select>
 </mapper>

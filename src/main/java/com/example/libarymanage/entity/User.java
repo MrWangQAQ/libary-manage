@@ -1,7 +1,7 @@
 package com.example.libarymanage.entity;
 
 public class User {
-    private String id;
+    private Integer id;
 
     private String userName;
 
@@ -9,7 +9,7 @@ public class User {
 
     private String userNumber;
 
-    public User(String id, String userName, String password, String userNumber) {
+    public User(Integer id, String userName, String password, String userNumber) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -20,12 +20,12 @@ public class User {
         super();
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUserName() {

@@ -13,4 +13,6 @@ public interface BookAdminMapper {
     List<BookAdmin> selectAll();
 
     int updateByPrimaryKey(BookAdmin record);
+
+    BookAdmin selectByAdName(String adName);
 }

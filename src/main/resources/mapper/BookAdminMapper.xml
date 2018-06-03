@@ -40,4 +40,9 @@
     select id, ad_name, ad_password, ad_phone, admail
     from book_admin
   </select>
+  <select id="selectByAdName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, ad_name, ad_password, ad_phone, admail
+    from book_admin
+    where ad_name = #{ad_name,jdbcType=VARCHAR}
+  </select>
 </mapper>
