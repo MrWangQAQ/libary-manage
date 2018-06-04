@@ -2,7 +2,14 @@
   <div class="login">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
              class="demo-ruleForm login-container">
-      <h3 class="title">系统登录</h3>
+      <el-select style="padding-bottom: 20px" v-model="LoginType">
+        <el-option
+          v-for="selectLoginType in selectLoginTypes"
+          :key="selectLoginType.type"
+          :label="selectLoginType.label"
+          :value="selectLoginType.type">
+        </el-option>
+      </el-select>
       <el-form-item prop="login">
         <el-input type="text" v-model="ruleForm.login" auto-complete="off" placeholder="账号"></el-input>
       </el-form-item>
@@ -37,6 +44,21 @@
     /** state 默认信息 */
     data () {
       return {
+        selectLoginTypes: [
+          {
+            type: 'user',
+            label: '用户登录'
+          },
+          {
+            type: 'bookAdmin',
+            label: '图书管理员'
+          },
+          {
+            type: 'systemAdmin',
+            label: '系统管理员'
+          }
+        ],
+        LoginType: 'user',
         ruleForm: {
           login: '',
           password: '',
@@ -65,9 +87,10 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let array = {}
-            array.method = 'adminLogin'
-            array.username = this.ruleForm.login
+            array.type = this.LoginType
+            array.name = this.ruleForm.login
             array.password = this.ruleForm.password
+            array.remember = this.ruleForm.remember
             LoginApi.Login(array).then(res => {
               if (res.data.status) {
                 this.$message({
@@ -109,9 +132,5 @@
     transform: translate(-50%, -60%);
     overflow: hidden;
     min-width: 270px;
-    .title {
-      text-align: center;
-      color: #505458;
-    }
   }
 </style>
