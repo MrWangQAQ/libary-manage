@@ -10,7 +10,7 @@ export class BaseApi {
   constructor () {
     const headers = new Headers()
     this.servers = axios.create({
-      baseURL: 'http://120.79.129.212:8080/Internet-bar',
+      baseURL: 'http://127.0.0.1:8080',
       headers,
       timeout: 1,
       withCredentials: false
@@ -33,8 +33,6 @@ export class BaseApi {
     if (method === 'get') {
       url = `${url}?${qs.stringify(body)}`
       body = {}
-    } else {
-      body = new URLSearchParams(body)
     }
     return Promise.resolve(this.servers[method](url, body))
   }
