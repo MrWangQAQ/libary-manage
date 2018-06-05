@@ -9,12 +9,10 @@ import com.example.libarymanage.service.UserService;
 import com.example.libarymanage.utils.JSONResult;
 import com.example.libarymanage.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -33,7 +31,7 @@ public class LoginController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/judge")
-    public JSONResult judge(@Valid Map input) {
+    public JSONResult judge(@RequestBody @Valid Map input) {
         JSONResult jsonResult = new JSONResult<>();
         User user;
         BookAdmin bookAdmin;
@@ -46,7 +44,7 @@ public class LoginController {
         switch (input.get("type").toString()){
             case "user":
                 user = userService.selectByUserNumber(name);
-                if (user == null){
+                if (user != null){
                     status = passwordUtil.verify(password, user.getPassword());
                 } else {
                     error = 0;
@@ -55,7 +53,7 @@ public class LoginController {
                 break;
             case "bookAdmin":
                 bookAdmin = bookAdminService.selectByAdName(name);
-                if (bookAdmin == null){
+                if (bookAdmin != null){
                     status = passwordUtil.verify(password, bookAdmin.getAdPassword());
                 } else {
                     error = 0;
@@ -64,7 +62,7 @@ public class LoginController {
                 break;
             case "systemAdmin":
                 systemAdmin = systemAdminService.selectByAdminName(name);
-                if (systemAdmin == null){
+                if (systemAdmin != null){
                     status = passwordUtil.verify(password, systemAdmin.getAdminPassword());
                 } else {
                     error = 0;
@@ -78,6 +76,7 @@ public class LoginController {
         } else if (error == 1){
             jsonResult.setMessage("密码错误！");
         }
+        jsonResult.setStatus(status);
         return jsonResult;
     }
 }

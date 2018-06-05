@@ -43,4 +43,10 @@
     from user
     where user_number = #{userNumber,jdbcType=VARCHAR}
   </select>
+  <update id="editUser" parameterType="com.example.libarymanage.entity.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+    user_number = #{userNumber,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

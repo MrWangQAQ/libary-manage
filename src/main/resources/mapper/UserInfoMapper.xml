@@ -50,4 +50,53 @@
     select id, user_id, departments, major, phone, email, max, time, lended_num
     from user_info
   </select>
+  <select id="getList" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.dto.UserList">
+    SELECT
+      user_info.id id,
+      user_id,
+      `user`.user_name user_name,
+      departments,
+      major,
+      phone,
+      email,
+      max,
+      time,
+      lended_num
+    FROM
+      user_info
+    LEFT JOIN user ON user.id = user_info.user_id
+    ORDER BY
+      user_number
+    LIMIT ${(page-1)*pageSize},
+    #{pageSize}
+  </select>
+  <select id="selectUserInfoById" parameterType="java.lang.Integer" resultType="com.example.libarymanage.entity.dto.UserList">
+    SELECT
+    user_info.id id,
+    user_id,
+    user_number,
+    `user`.user_name user_name,
+    departments,
+    major,
+    phone,
+    email,
+    max,
+    time,
+    lended_num
+    FROM
+    user_info
+    LEFT JOIN user ON user.id = user_info.user_id
+    where user.id = #{userId,jdbcType=INTEGER}
+  </select>
+  <update id="editUserInfo" parameterType="com.example.libarymanage.entity.UserInfo">
+    update user_info
+    set user_id = #{userId,jdbcType=INTEGER},
+    departments = #{departments,jdbcType=VARCHAR},
+    major = #{major,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR},
+    max = #{max,jdbcType=INTEGER},
+    time = #{time,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

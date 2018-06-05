@@ -35,6 +35,12 @@ public class JSONResult<T> {
     private String errCode;
 
     /**
+     * 状态
+     */
+    @ApiModelProperty(value = "状态", name = "status", dataType = "Boolean")
+    private Boolean status;
+
+    /**
      * 消息
      */
     @ApiModelProperty(value = "消息", name = "message", dataType = "String")
@@ -147,5 +153,19 @@ public class JSONResult<T> {
      */
     public void setData(T data) {
         this.data = data;
+    }
+
+    /**
+     * 返回 返回状态
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置 返回状态
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

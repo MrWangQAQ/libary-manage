@@ -14,7 +14,9 @@ export default new Router({
       path: '/admin',
       name: 'admin',
       component: () => import('../packages/ui/container'),
-
+      children: [
+        ...home
+      ]
     }
   ]
 })

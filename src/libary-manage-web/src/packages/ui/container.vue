@@ -41,6 +41,7 @@
   }
 
   .el-header, .el-footer {
+    padding: 0;
     background-color: #B3C0D1;
     color: #333;
     text-align: center;
