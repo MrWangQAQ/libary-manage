@@ -90,7 +90,7 @@
             },
             /** 弹窗开关 */
             dialogVisible: false,
-            dialog_title: '编辑版块',
+            dialog_title: '编辑',
             type: '',
             userId: '',
             userInfoId: ''

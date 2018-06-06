@@ -4,7 +4,7 @@
 
 import {LoginApi} from '../../view/admin/login/api';
 import {Auth} from './auth';
-
+import {Msg} from '../../tools/message';
 const defaultUser = {type: '', user: '', password: '', remember: false};
 
 export default {
@@ -15,8 +15,6 @@ export default {
     isLogin: Auth.getLogin() || false,
     /** 用户登陆账户密码 */
     accountPwd: Auth.getAccountPwd() || defaultUser,
-    /** 角色权限点 */
-    roles: [],
   },
   /** 计算属性 */
   getters: {
@@ -38,24 +36,25 @@ export default {
     ACCOUNT_LOGOUT_FAILURE(state) {
       state.userInfo = {};
       state.accountPwd = {};
-      state.roles = [];
       state.isLogin = false;
       Auth.removeAccountPwd();
       Auth.removeUserInfo();
       Auth.removeLogin();
-    },
-    ACCOUNT_LOGOUT_ROULES(state) {
-      state.roles = Auth.getUserInfo()
     }
   },
   /** Action 提交的是 mutation，而不是直接变更状态。Action 可以包含任意异步操作。 */
   actions: {
     /** 登录 */
     accountLoginSubmit({commit}, params) {
-      return new Promise((resolve, reject) => {
+      return new Promise ((resolve, reject) => {
         LoginApi.Login(params).then((res) => {
-          commit('ACCOUNT_AUTH_STATUS_CHANGED', {...res, params});
-          resolve()
+          if (res.data.status) {
+            commit('ACCOUNT_AUTH_STATUS_CHANGED', {...res, params});
+            Msg.success(res.data.message);
+            resolve()
+          } else {
+            Msg.error(res.data.message)
+          }
         }).catch(err => {
           reject(err);
           commit('ACCOUNT_LOGOUT_FAILURE');

@@ -74,19 +74,21 @@
         }
       }
     },
-    /** 计算属性 */
     computed: {},
     mounted () {
-      this.getUser()
+    },
+    created() {
+      this.getUser();
     },
     /** 方法事件 */
     methods: {
-      getUser: function () {
+      getUser: function() {
+        this.ruleForm = this.$store.getters.accountPwd
       },
       submitForm: function (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let array = {}
+            /*let array = {}
             array.type = this.LoginType
             array.name = this.ruleForm.login
             array.password = this.ruleForm.password
@@ -102,6 +104,15 @@
                 this.$message.error(res.data.message)
                 return false
               }
+            })*/
+            let array = {}
+            array.type = this.LoginType
+            array.name = this.ruleForm.login
+            array.password = this.ruleForm.password
+            array.remember = this.ruleForm.remember
+            this.$store.dispatch('accountLoginSubmit', array).then(() => {
+              this.$router.push({path: '/admin'})
+            }).catch(() => {
             })
           }
         })

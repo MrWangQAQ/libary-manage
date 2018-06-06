@@ -45,6 +45,7 @@ public class LoginController {
             case "user":
                 user = userService.selectByUserNumber(name);
                 if (user != null){
+                    jsonResult.setData(user);
                     status = passwordUtil.verify(password, user.getPassword());
                 } else {
                     error = 0;
@@ -54,6 +55,7 @@ public class LoginController {
             case "bookAdmin":
                 bookAdmin = bookAdminService.selectByAdName(name);
                 if (bookAdmin != null){
+                    jsonResult.setData(bookAdmin);
                     status = passwordUtil.verify(password, bookAdmin.getAdPassword());
                 } else {
                     error = 0;
@@ -63,6 +65,7 @@ public class LoginController {
             case "systemAdmin":
                 systemAdmin = systemAdminService.selectByAdminName(name);
                 if (systemAdmin != null){
+                    jsonResult.setData(systemAdmin);
                     status = passwordUtil.verify(password, systemAdmin.getAdminPassword());
                 } else {
                     error = 0;
@@ -75,6 +78,7 @@ public class LoginController {
             jsonResult.setMessage("登录成功！");
         } else if (error == 1){
             jsonResult.setMessage("密码错误！");
+            jsonResult.setData("");
         }
         jsonResult.setStatus(status);
         return jsonResult;

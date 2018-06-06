@@ -45,4 +45,17 @@
     from system_admin
     where admin_name = #{admin_name,jdbcType=VARCHAR}
   </select>
+  <update id="changePassword" parameterType="com.example.libarymanage.entity.SystemAdmin">
+    update system_admin
+    set
+    admin_password = #{adminPassword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="editData" parameterType="com.example.libarymanage.entity.SystemAdmin">
+    update system_admin
+    set
+    admin_phone = #{adminPhone},
+    admin_email = #{adminEmail}
+    where id = #{id}
+  </update>
 </mapper>

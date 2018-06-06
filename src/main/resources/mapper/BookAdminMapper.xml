@@ -45,4 +45,33 @@
     from book_admin
     where ad_name = #{ad_name,jdbcType=VARCHAR}
   </select>
+  <select id="getList" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.BookAdmin">
+    SELECT
+    id, ad_name, ad_phone, admail
+    FROM
+    book_admin
+    LIMIT ${(page-1)*pageSize},
+    #{pageSize}
+  </select>
+  <update id="editById" parameterType="com.example.libarymanage.entity.BookAdmin">
+    update book_admin
+    set ad_name = #{adName,jdbcType=VARCHAR},
+    ad_phone = #{adPhone,jdbcType=VARCHAR},
+    admail = #{admail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="changePassword" parameterType="com.example.libarymanage.entity.BookAdmin">
+    update book_admin
+    set ad_password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectById" parameterType="java.lang.Integer" resultType="com.example.libarymanage.entity.BookAdmin">
+    select ad_name, ad_phone, admail
+    from book_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getTotalCount" resultType="java.lang.Integer">
+    select count(*) totalCount
+    from book_admin
+  </select>
 </mapper>

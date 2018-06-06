@@ -2,6 +2,7 @@ package com.example.libarymanage.dao.mapper;
 
 import com.example.libarymanage.entity.SystemAdmin;
 import java.util.List;
+import java.util.Map;
 
 public interface SystemAdminMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +16,8 @@ public interface SystemAdminMapper {
     int updateByPrimaryKey(SystemAdmin record);
 
     SystemAdmin selectByAdminName(String adminName);
+
+    int changePassword(SystemAdmin record);
+
+    int editData(Map input);
 }

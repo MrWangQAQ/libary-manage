@@ -5,6 +5,7 @@ import com.example.libarymanage.entity.dto.UserList;
 import com.example.libarymanage.service.UserInfoService;
 import com.example.libarymanage.service.UserService;
 import com.example.libarymanage.utils.JSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ public class UserManageController {
     private final UserInfoService userInfoService;
     private final UserService userService;
 
+    @Autowired
     public UserManageController(UserInfoService userInfoService, UserService userService) {
         this.userInfoService = userInfoService;
         this.userService = userService;

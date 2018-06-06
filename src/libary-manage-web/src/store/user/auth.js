@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 const sessionStorage = window.sessionStorage;
 
 export class Auth {
