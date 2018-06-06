@@ -49,4 +49,8 @@
     user_number = #{userNumber,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getTotalCount" resultType="java.lang.Integer">
+    select count(*) totalCount
+    from user
+  </select>
 </mapper>

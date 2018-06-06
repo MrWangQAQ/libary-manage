@@ -37,7 +37,7 @@
           </el-table-column>
           <el-table-column
             prop="time"
-            label="借阅期限"
+            label="借阅期限(天)"
             min-width="100">
           </el-table-column>
           <el-table-column
@@ -54,16 +54,13 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination class="page" style="margin-top:20px"
-                       layout="prev, pager, next"
-                       background
-                       @current-change="changePage"
-                       prev-text="上一页"
-                       next-text="下一页"
-                       :page-size="parseInt(pagination.page_size)"
-                       :current-page="parseInt(pagination.page)"
-                       :total="parseInt(pagination.total_count)">
-        </el-pagination>
+        <pagination
+          :page="pagination.page"
+          :pageSize="pagination.page_size"
+          :totalCount="pagination.total_count"
+          @handleCurrentChange="changePage"
+          @handleSizeChange="changePageSize"
+        ></pagination>
         <user_manage_dialog
           :dialog_title="dialog_title"
           :dialogVisible="dialogVisible"
@@ -80,6 +77,7 @@
 <script>
   import {UserManageApi} from './api'
   import user_manage_dialog from './add-dialog'
+  import pagination from '@/packages/components/pagination'
     export default {
         name: 'userManageList',
       data () {
@@ -99,23 +97,29 @@
           }
       },
       components: {
-        user_manage_dialog
+        user_manage_dialog,
+        pagination
       },
       mounted () {
         this.initTableData()
-        this.initListTotal()
       },
       methods: {
         initTableData: function () {
           let array = {}
-          array.page = '1'
-          array.pageSize = '10'
+          array.page = this.pagination.page
+          array.pageSize = this.pagination.page_size
           UserManageApi.getList(array).then(res => {
             this.userData = res.data.data
+            this.pagination.total_count = res.data.totalCount
           })
         },
-        initListTotal: function () {
-
+        changePage: function (page) {
+          this.pagination.page = page
+          this.initTableData()
+        },
+        changePageSize: function (pageSize) {
+          this.pagination.page_size = pageSize
+          this.initTableData()
         },
         tableOtherClick (row, type) {
           if (type === 'edit') {

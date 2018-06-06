@@ -12,4 +12,6 @@ public interface UserService extends BaseService{
     int deleteByUserId(Integer userId);
 
     int editUser(Map input);
+
+    int getTotalCount();
 }

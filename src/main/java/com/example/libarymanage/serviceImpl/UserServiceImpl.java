@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
         record.setUserNumber(input.get("userNumber").toString());
         return userMapper.editUser(record);
     }
+
+    @Override
+    public int getTotalCount(){
+        return userMapper.getTotalCount();
+    }
 }

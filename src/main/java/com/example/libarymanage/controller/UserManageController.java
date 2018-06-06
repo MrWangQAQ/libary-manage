@@ -34,6 +34,9 @@ public class UserManageController {
         JSONResult jsonResult = new JSONResult<>();
         List<UserList> listUserInfo = userInfoService.getList(input);
         jsonResult.setData(listUserInfo);
+        /** 获取总记录数*/
+        int totalCount = userService.getTotalCount();
+        jsonResult.setTotalCount(totalCount);
         return jsonResult;
     }
 

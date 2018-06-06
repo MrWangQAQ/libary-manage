@@ -28,7 +28,7 @@
         <el-form-item label="借阅上限：" prop="max">
           <el-input v-model="user.max" ></el-input>
         </el-form-item>
-        <el-form-item label="借阅期限：" prop="time">
+        <el-form-item label="借阅期限(天)：" prop="time">
           <el-input v-model="user.time" ></el-input>
         </el-form-item>
       </el-form>
