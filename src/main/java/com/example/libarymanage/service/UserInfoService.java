@@ -17,4 +17,6 @@ public interface UserInfoService extends BaseService {
     int deleteByUserInfoId(Integer userInfoId);
 
     int updateByPrimaryKey(Map input);
+
+    int changeInformation(Map input);
 }

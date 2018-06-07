@@ -20,4 +20,8 @@ export class UserManageApi {
   static editUser (data) {
     return server.connection('POST', '/userManage/editUser', data)
   }
+
+  static resetPassword (userId) {
+    return server.connection('GET', '/userManage/resetPassword', {userId})
+  }
 }

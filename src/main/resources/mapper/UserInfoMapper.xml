@@ -99,4 +99,11 @@
     time = #{time,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="changeInformation" parameterType="com.example.libarymanage.entity.UserInfo">
+    update user_info
+    set
+    phone = #{phone,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

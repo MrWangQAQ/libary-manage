@@ -22,4 +22,6 @@ public interface UserInfoMapper {
     UserList selectUserInfoById(Integer userId);
 
     int editUserInfo(UserInfo record);
+
+    int changeInformation(UserInfo record);
 }

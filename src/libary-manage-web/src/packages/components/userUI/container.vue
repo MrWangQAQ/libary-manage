@@ -71,8 +71,9 @@
   .box-card{
     width: 80%;
     margin: auto;
-    margin-top: 50px;
     border: 3px solid #409eff;
+    height: auto;
     text-align: center;
+    overflow: hidden;
   }
 </style>

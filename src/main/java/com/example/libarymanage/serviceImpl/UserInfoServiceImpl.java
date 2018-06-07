@@ -4,6 +4,7 @@ import com.example.libarymanage.dao.mapper.UserInfoMapper;
 import com.example.libarymanage.entity.UserInfo;
 import com.example.libarymanage.entity.dto.UserList;
 import com.example.libarymanage.service.UserInfoService;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,5 +61,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfo.setUserId(Integer.parseInt(input.get("userId").toString()));
         userInfo.setMajor(input.get("major").toString());
         return userInfoMapper.editUserInfo(userInfo);
+    }
+
+    @Override
+    public int changeInformation(Map input){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(Integer.parseInt(input.get("id").toString()));
+        userInfo.setPhone(input.get("phone").toString());
+        userInfo.setEmail(input.get("email").toString());
+        return userInfoMapper.changeInformation(userInfo);
     }
 }

@@ -1,48 +1,58 @@
 <template>
-    <div class="userManageList">
+    <div class="bookManageList">
       <div class="text item">
         <el-button style="float: left;" type="primary" @click="add()">新增</el-button>
         <el-table align="center"
-                  :data="userData"
+                  :data="bookData"
                   stripe>
           <el-table-column
-            prop="userName"
-            label="用户名"
+            prop="bookNumber"
+            label="图书编号"
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="departments"
-            label="学院"
+            prop="bookName"
+            label="图书名称"
             min-width="150">
           </el-table-column>
           <el-table-column
-            prop="major"
-            label="专业"
+            prop="author"
+            label="作者"
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="phone"
-            label="电话"
+            prop="translator"
+            label="译者"
             min-width="180">
           </el-table-column>
           <el-table-column
-            prop="email"
-            label="邮箱"
+            prop="isbnCode"
+            label="ISBN编码"
             min-width="180">
           </el-table-column>
           <el-table-column
-            prop="max"
-            label="借阅上限"
+            prop="comeupTime"
+            label="出版日期"
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="time"
-            label="借阅期限(天)"
+            prop="publishCompany"
+            label="出版社"
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="lendedNum"
-            label="在借数量"
+            prop="state"
+            label="是否借出"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="enteringMen"
+            label="入库人"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="enteringDate"
+            label="入库时间"
             min-width="100">
           </el-table-column>
           <el-table-column label="操作" min-width="200">
@@ -51,8 +61,6 @@
                          @click="tableOtherClick(scope.row, 'edit')" type="text">编辑</el-button>
               <el-button size="mini"
                          @click="tableOtherClick(scope.row, 'delete')" type="text" style="color: red">删除</el-button>
-              <el-button size="mini"
-                         @click="resetPassword(scope.row)" type="text" style="color: gray">重置密码</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -63,43 +71,41 @@
           @handleCurrentChange="changePage"
           @handleSizeChange="changePageSize"
         ></pagination>
-        <user_manage_dialog
+        <book_manage_dialog
           :dialog_title="dialog_title"
           :dialogVisible="dialogVisible"
           :type="type"
-          :userId="userId"
-          :userInfoId="userInfoId"
+          :userId="bookId"
           @onCancel="onCancel"
           @submit="submit"
-        ></user_manage_dialog>
+        ></book_manage_dialog>
       </div>
     </div>
 </template>
 
 <script>
-  import {UserManageApi} from './api'
-  import user_manage_dialog from './add-dialog'
+  import {BookApi} from './api'
+  import book_manage_dialog from './add-dialog'
   import pagination from '@/packages/components/pagination'
     export default {
-        name: 'userManageList',
+        name: "bookManageList",
       data () {
-          return {
-            userData: [],
-            pagination: {
-              page_size: '10', // 页面大小
-              page: '1', // 当前页
-              total_count: '10' // 总页数
-            },
-            /** 弹窗开关 */
-            dialogVisible: false,
-            dialog_title: '编辑',
-            type: '',
-            userId: '',
-            userInfoId: ''
-          }
+        return {
+          bookData: [],
+          pagination: {
+            page_size: '10', // 页面大小
+            page: '1', // 当前页
+            total_count: '10' // 总页数
+          },
+          /** 弹窗开关 */
+          dialogVisible: false,
+          dialog_title: '编辑',
+          type: '',
+          bookId: ''
+        }
       },
       components: {
-        user_manage_dialog,
+        book_manage_dialog,
         pagination
       },
       mounted () {
@@ -110,8 +116,8 @@
           let array = {}
           array.page = this.pagination.page
           array.pageSize = this.pagination.page_size
-          UserManageApi.getList(array).then(res => {
-            this.userData = res.data.data
+          BookApi.getList(array).then(res => {
+            this.bookData = res.data.data
             this.pagination.total_count = res.data.totalCount
           })
         },
@@ -145,14 +151,10 @@
           this.type = 'edit'
           this.dialog_title = '编辑读者'
           this.dialogVisible = true
-          this.userId = row.userId
-          this.userInfoId = row.id
+          this.bookId = row.id
         },
         Delete: function (row) {
-          let array = {}
-          array.userId = row.userId
-          array.userInfoId = row.id
-          UserManageApi.deleteUser(array).then(res => {
+          BookApi.deleteBook(row.id).then(res => {
             console.log(res.data.message)
             this.initTableData()
           })
@@ -165,31 +167,8 @@
         },
         add: function () {
           this.type = 'add'
-          this.dialog_title = '新增读者'
+          this.dialog_title = '图书入库'
           this.dialogVisible = true
-        },
-        resetPassword: function (row) {
-          this.$confirm('确定要重置此用户密码？, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            UserManageApi.resetPassword(row.userId).then(res => {
-              if (res.data.status) {
-                this.$message({
-                  message: res.data.message,
-                  type: 'success'
-                })
-              } else {
-                this.$message.error(res.data.message)
-              }
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消'
-            })
-          })
         }
       }
     }

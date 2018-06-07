@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.example.libarymanage.entity.BookInfo">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="book_number" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="book_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="translator" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -23,11 +24,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into book_info (book_name, author, translator, 
+    insert into book_info (book_name, book_number, author, translator,
       isbn_code, comeup_time, publish_company, 
       state, entering_men, entering_date
       )
-    values (#{bookName,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{translator,jdbcType=VARCHAR}, 
+    values (#{bookName,jdbcType=VARCHAR}, #{bookNumber,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{translator,jdbcType=VARCHAR},
       #{isbnCode,jdbcType=VARCHAR}, #{comeupTime,jdbcType=TIMESTAMP}, #{publishCompany,jdbcType=VARCHAR}, 
       #{state,jdbcType=BIT}, #{enteringMen,jdbcType=VARCHAR}, #{enteringDate,jdbcType=TIMESTAMP}
       )
@@ -35,6 +36,7 @@
   <update id="updateByPrimaryKey" parameterType="com.example.libarymanage.entity.BookInfo">
     update book_info
     set book_name = #{bookName,jdbcType=VARCHAR},
+      book_number = #{bookName,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
       translator = #{translator,jdbcType=VARCHAR},
       isbn_code = #{isbnCode,jdbcType=VARCHAR},
@@ -46,14 +48,25 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, book_name, author, translator, isbn_code, comeup_time, publish_company, 
+    select id, book_name, book_number, author, translator, isbn_code, comeup_time, publish_company,
     state, entering_men, entering_date
     from book_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, book_name, author, translator, isbn_code, comeup_time, publish_company, 
+    select id, book_name, book_number, author, translator, isbn_code, comeup_time, publish_company,
     state, entering_men, entering_date
+    from book_info
+  </select>
+  <select id="getList" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.BookInfo">
+    select id, book_name, book_number, author, translator, isbn_code, comeup_time, publish_company,
+    state, entering_men, entering_date
+    from book_info
+    LIMIT ${(page-1)*pageSize},
+    #{pageSize}
+  </select>
+  <select id="getTotalCount" resultType="java.lang.Integer">
+    select count(*) totalCount
     from book_info
   </select>
 </mapper>

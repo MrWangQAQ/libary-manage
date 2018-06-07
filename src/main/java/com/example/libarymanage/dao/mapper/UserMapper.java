@@ -19,4 +19,6 @@ public interface UserMapper {
     int editUser(User record);
 
     int getTotalCount();
+
+    int changePassword(User record);
 }

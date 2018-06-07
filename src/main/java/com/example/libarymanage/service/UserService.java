@@ -14,4 +14,8 @@ public interface UserService extends BaseService{
     int editUser(Map input);
 
     int getTotalCount();
+
+    int changePassword(Map input);
+
+    int resetPassword(Integer id);
 }

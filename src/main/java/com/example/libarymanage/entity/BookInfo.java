@@ -5,6 +5,8 @@ import java.util.Date;
 public class BookInfo {
     private Integer id;
 
+    private String bookNumber;
+
     private String bookName;
 
     private String author;
@@ -23,8 +25,22 @@ public class BookInfo {
 
     private Date enteringDate;
 
-    public BookInfo(Integer id, String bookName, String author, String translator, String isbnCode, Date comeupTime, String publishCompany, Boolean state, String enteringMen, Date enteringDate) {
+    public BookInfo(Integer id, String bookNumber, String bookName, String author, String translator, String isbnCode, Date comeupTime, String publishCompany, Boolean state, String enteringMen, Date enteringDate) {
         this.id = id;
+        this.bookNumber = bookNumber;
+        this.bookName = bookName;
+        this.author = author;
+        this.translator = translator;
+        this.isbnCode = isbnCode;
+        this.comeupTime = comeupTime;
+        this.publishCompany = publishCompany;
+        this.state = state;
+        this.enteringMen = enteringMen;
+        this.enteringDate = enteringDate;
+    }
+
+    public BookInfo(String bookNumber, String bookName, String author, String translator, String isbnCode, Date comeupTime, String publishCompany, Boolean state, String enteringMen, Date enteringDate) {
+        this.bookNumber = bookNumber;
         this.bookName = bookName;
         this.author = author;
         this.translator = translator;
@@ -118,5 +134,13 @@ public class BookInfo {
 
     public void setEnteringDate(Date enteringDate) {
         this.enteringDate = enteringDate;
+    }
+
+    public String getBookNumber() {
+        return bookNumber;
+    }
+
+    public void setBookNumber(String bookNumber) {
+        this.bookNumber = bookNumber;
     }
 }

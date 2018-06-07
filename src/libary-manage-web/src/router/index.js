@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from './home'
 import userUI from './userUI'
+import bookManageUI from './bookManageUI'
 Vue.use(Router)
 
 export default new Router({
@@ -24,7 +25,7 @@ export default new Router({
       name: 'bookManageUI',
       component: () => import('../packages/ui/container'),
       children: [
-
+        ...bookManageUI
       ]
     },
     {

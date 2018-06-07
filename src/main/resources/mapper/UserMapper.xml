@@ -53,4 +53,10 @@
     select count(*) totalCount
     from user
   </select>
+  <update id="changePassword" parameterType="com.example.libarymanage.entity.User">
+    update user
+    set
+    password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

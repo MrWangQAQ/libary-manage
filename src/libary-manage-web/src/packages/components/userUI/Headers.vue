@@ -6,7 +6,8 @@
       </el-col>
       <el-col :span="8"><span class="head-fontSize">个人中心</span></el-col>
       <el-col :span="8" style="text-align: right;padding-right: 40px;">
-        <span class="head-fontSize hoverHead">退出</span>
+        <span class="head-fontSize">{{userInfo.userName}}</span>
+        <span class="head-fontSize hoverHead" @click="outAcount">退出</span>
       </el-col>
     </el-row>
   </div>
@@ -36,6 +37,12 @@ export default {
     // todo
   },
   methods: {
+    outAcount: function () {
+      this.$store.dispatch('accountLogoutSubmit').then(() => {
+        this.$router.push({path: '/login'})
+      }).catch(() => {
+      })
+    }
   },
   watch: {}
 }

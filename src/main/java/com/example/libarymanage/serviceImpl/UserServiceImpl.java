@@ -54,4 +54,31 @@ public class UserServiceImpl implements UserService {
     public int getTotalCount(){
         return userMapper.getTotalCount();
     }
+
+    @Override
+    public int changePassword(Map input){
+        User user = new User();
+        PasswordUtil passwordUtil = new PasswordUtil();
+        String password = input.get("password").toString();
+        String truePassword = input.get("truePassword").toString();
+        Boolean status = passwordUtil.verify(password, truePassword);
+        if(status){
+            String newPassword = passwordUtil.generate(input.get("newPassword").toString());
+            user.setPassword(newPassword);
+            user.setId(Integer.parseInt(input.get("id").toString()));
+            return userMapper.changePassword(user);
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public int resetPassword(Integer id){
+        User user = new User();
+        PasswordUtil passwordUtil = new PasswordUtil();
+        String password = passwordUtil.generate("123456");
+        user.setPassword(password);
+        user.setId(id);
+        return userMapper.changePassword(user);
+}
 }

@@ -91,4 +91,46 @@ public class UserManageController {
         }
         return jsonResult;
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/resetPassword")
+    public JSONResult resetPassword(int userId) {
+        JSONResult jsonResult = new JSONResult<>();
+        int status = userService.resetPassword(userId);
+        if (status == 0){
+            jsonResult.setMessage("重置失败！");
+            jsonResult.setStatus(false);
+        } else{
+            jsonResult.setMessage("重置成功！");
+            jsonResult.setStatus(true);
+        }
+        return jsonResult;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/changeInformation")
+    public JSONResult changeInformation(@RequestBody @Valid Map input) {
+        JSONResult jsonResult = new JSONResult<>();
+        int status = userInfoService.changeInformation(input);
+        if (status == 0){
+            jsonResult.setMessage("修改失败！");
+            jsonResult.setStatus(true);
+        } else{
+            jsonResult.setMessage("修改成功！");
+            jsonResult.setStatus(false);
+        }
+        return jsonResult;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/changePassword")
+    public JSONResult changePassword(@RequestBody @Valid Map input) {
+        JSONResult jsonResult = new JSONResult<>();
+        int status = userService.changePassword(input);
+        if (status == 0){
+            jsonResult.setMessage("原密码不正确！");
+            jsonResult.setStatus(false);
+        } else{
+            jsonResult.setMessage("修改成功！");
+            jsonResult.setStatus(true);
+        }
+        return jsonResult;
+    }
 }

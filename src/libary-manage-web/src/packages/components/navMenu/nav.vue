@@ -29,6 +29,12 @@
               <span slot="title">修改密码</span>
             </el-menu-item>
           </router-link>
+          <router-link v-if="userInfo.adName"  class="head-link" to="/bookManageUI/bookManage">
+            <el-menu-item index="1-5">
+              <i class="el-icon-mobile-phone"></i>
+              <span slot="title">图书管理</span>
+            </el-menu-item>
+          </router-link>
         </el-menu-item-group>
     </el-menu>
   </el-aside>
