@@ -6,7 +6,6 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="book_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="book_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="borrow_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="should_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="return_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -21,10 +20,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into borrow_records (user_id, book_id, book_name, 
+    insert into borrow_records (user_id, book_id,
       borrow_time, should_time, return_time, 
       state)
-    values (#{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER},
       #{borrowTime,jdbcType=TIMESTAMP}, #{shouldTime,jdbcType=TIMESTAMP}, #{returnTime,jdbcType=TIMESTAMP}, 
       #{state,jdbcType=BIT})
   </insert>
@@ -32,7 +31,6 @@
     update borrow_records
     set user_id = #{userId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},
-      book_name = #{bookName,jdbcType=VARCHAR},
       borrow_time = #{borrowTime,jdbcType=TIMESTAMP},
       should_time = #{shouldTime,jdbcType=TIMESTAMP},
       return_time = #{returnTime,jdbcType=TIMESTAMP},
@@ -40,12 +38,112 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, user_id, book_id, book_name, borrow_time, should_time, return_time, state
+    select id, user_id, book_id, borrow_time, should_time, return_time, state
     from borrow_records
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_id, book_id, book_name, borrow_time, should_time, return_time, state
+    select id, user_id, book_id, borrow_time, should_time, return_time, state
+    from borrow_records
+  </select>
+  <insert id="borrowBook" parameterType="com.example.libarymanage.entity.BorrowRecords">
+    insert into borrow_records (user_id, book_id,
+    borrow_time, should_time,
+    state)
+    values (#{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER},
+    #{borrowTime,jdbcType=TIMESTAMP}, #{shouldTime,jdbcType=TIMESTAMP},
+    #{state,jdbcType=BIT})
+  </insert>
+  <update id="backBook" parameterType="com.example.libarymanage.entity.BorrowRecords">
+    update borrow_records
+    set
+    return_time = NOW(),
+    state = #{state,jdbcType=BIT}
+    where book_id = #{bookId,jdbcType=INTEGER}
+  </update>
+  <select id="getBookList" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.dto.BorrowRecordsDTO">
+    SELECT
+    borrow_time,
+    should_time,
+    return_time,
+    author,
+    book_name,
+    book_number,
+    translator,
+    isbn_code,
+    comeup_time,
+    publish_company,
+    entering_men,
+    user_number
+    FROM
+    borrow_records b1
+    LEFT JOIN book_info b2 ON b2.id = b1.book_id
+    LEFT JOIN `user` ON `user`.id = b1.user_id
+    WHERE user_id = #{userId,jdbcType=VARCHAR}
+    ORDER BY borrow_time
+    LIMIT ${(page-1)*pageSize},
+    #{pageSize}
+  </select>
+  <select id="getBookALLList" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.dto.BorrowRecordsDTO">
+    SELECT
+      borrow_time,
+      should_time,
+      return_time,
+      author,
+      book_name,
+      book_number,
+      translator,
+      isbn_code,
+      comeup_time,
+      publish_company,
+      entering_men,
+      user_number
+    FROM
+    borrow_records b1
+    LEFT JOIN book_info b2 ON b2.id = b1.book_id
+    LEFT JOIN `user` ON `user`.id = b1.user_id
+    WHERE book_name LIKE  concat("%",IFNULL(#{search}, ''), "%") or
+          book_number LIKE concat("%",IFNULL(#{search}, ''), "%") or
+          user_number like concat("%",IFNULL(#{search}, ''), "%")
+    ORDER BY borrow_time
+    LIMIT ${(page-1)*pageSize},
+    #{pageSize}
+  </select>
+  <select id="getBookByNumber" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.dto.BorrowRecordsDTO">
+    SELECT
+      borrow_time,
+      should_time,
+      book_name,
+      user_number
+    FROM
+    borrow_records b1
+    LEFT JOIN book_info b2 ON b2.id = b1.book_id
+    LEFT JOIN `user` ON `user`.id = b1.user_id
+    WHERE user_number = #{userNumber} and b1.state = #{state}
+    ORDER BY borrow_time
+    LIMIT ${(page-1)*pageSize},
+      #{pageSize}
+  </select>
+  <select id="getTotalCountBookByNumber" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT
+    count(*) totalCount
+    FROM
+    borrow_records b1
+    LEFT JOIN book_info b2 ON b2.id = b1.book_id
+    LEFT JOIN `user` ON `user`.id = b1.user_id
+    WHERE user_number = #{userNumber} and b1.state = #{state}
+  </select>
+  <select id="getTotalCountByNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*) totalCount
+    from borrow_records
+    WHERE user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="getTotalCount" resultType="java.lang.Integer">
+    select count(*) totalCount
+    from borrow_records
+  </select>
+  <select id="getBorrowRecordsByUserNumber" resultMap="BaseResultMap">
+    select id, user_id, book_id, borrow_time, should_time, return_time, state
     from borrow_records
   </select>
 </mapper>

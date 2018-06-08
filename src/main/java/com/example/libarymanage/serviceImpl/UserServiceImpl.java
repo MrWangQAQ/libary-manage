@@ -2,6 +2,7 @@ package com.example.libarymanage.serviceImpl;
 
 import com.example.libarymanage.dao.mapper.UserMapper;
 import com.example.libarymanage.entity.User;
+import com.example.libarymanage.entity.dto.UserList;
 import com.example.libarymanage.service.UserService;
 import com.example.libarymanage.utils.PasswordUtil;
 import org.springframework.stereotype.Component;
@@ -73,12 +74,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int resetPassword(Integer id){
+    public int resetPassword(Integer id) {
         User user = new User();
         PasswordUtil passwordUtil = new PasswordUtil();
         String password = passwordUtil.generate("123456");
         user.setPassword(password);
         user.setId(id);
         return userMapper.changePassword(user);
-}
+    }
+
+    @Override
+    public UserList getUserByNumber(String userNumber){
+        return userMapper.getUserByNumber(userNumber);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.libarymanage.service;
 
 import com.example.libarymanage.entity.User;
+import com.example.libarymanage.entity.dto.UserList;
 
 import java.util.Map;
 
@@ -18,4 +19,6 @@ public interface UserService extends BaseService{
     int changePassword(Map input);
 
     int resetPassword(Integer id);
+
+    UserList getUserByNumber(String userNumber);
 }

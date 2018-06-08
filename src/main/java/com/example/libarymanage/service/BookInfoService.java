@@ -17,4 +17,10 @@ public interface BookInfoService extends BaseService{
     int editBook(BookInfo bookInfo);
 
     BookInfo selectBookById(Integer id);
+
+    int backBook(int bookId);
+
+    BookInfo getBookByNumber(String bookNumber);
+
+    int borrowBook(int bookId);
 }

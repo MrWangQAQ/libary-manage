@@ -35,6 +35,30 @@
               <span slot="title">图书管理</span>
             </el-menu-item>
           </router-link>
+          <router-link v-if="userInfo.adName"  class="head-link" to="/bookManageUI/borrowBook">
+            <el-menu-item index="1-6">
+              <i class="el-icon-mobile-phone"></i>
+              <span slot="title">读者借书</span>
+            </el-menu-item>
+          </router-link>
+          <router-link v-if="userInfo.adName"  class="head-link" to="/bookManageUI/backBook">
+            <el-menu-item index="1-7">
+              <i class="el-icon-mobile-phone"></i>
+              <span slot="title">读者还书</span>
+            </el-menu-item>
+          </router-link>
+          <router-link v-if="userInfo.adName"  class="head-link" to="/bookManageUI/getBorrowRecords">
+            <el-menu-item index="1-8">
+              <i class="el-icon-mobile-phone"></i>
+              <span slot="title">查询借阅记录</span>
+            </el-menu-item>
+          </router-link>
+          <router-link v-if="userInfo.adName"  class="head-link" to="/bookManageUI/changePassword">
+            <el-menu-item index="1-9">
+              <i class="el-icon-mobile-phone"></i>
+              <span slot="title">修改密码</span>
+            </el-menu-item>
+          </router-link>
         </el-menu-item-group>
     </el-menu>
   </el-aside>

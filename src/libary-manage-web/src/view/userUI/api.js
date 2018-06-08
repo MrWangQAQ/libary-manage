@@ -13,4 +13,12 @@ export class UserUIApi {
   static changePassword (data) {
     return server.connection('POST', '/userManage/changePassword', data)
   }
+
+  static getList (data) {
+    return server.connection('GET', '/borrowManage/getList', data)
+  }
+
+  static getBookByNumber (data) {
+    return server.connection('GET', '/borrowManage/getBookByNumber', data)
+  }
 }

@@ -69,4 +69,23 @@
     select count(*) totalCount
     from book_info
   </select>
+  <update id="backBook" parameterType="com.example.libarymanage.entity.BookInfo">
+    update book_info
+    set
+    state = #{state,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="borrowBook" parameterType="com.example.libarymanage.entity.BookInfo">
+    update book_info
+    set
+    state = #{state,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getBookByNumber" parameterType="java.lang.String" resultType="com.example.libarymanage.entity.BookInfo">
+    select id, book_name, book_number, author, translator, isbn_code, comeup_time, publish_company,
+    state,entering_men
+    from book_info
+    where book_number = #{bookNumber}
+  </select>
+
 </mapper>

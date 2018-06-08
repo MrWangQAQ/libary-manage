@@ -23,19 +23,28 @@
           <el-input v-model="book.isbnCode" ></el-input>
         </el-form-item>
         <el-form-item label="出版日期：" prop="comeupTime">
-          <el-input v-model="book.comeupTime" ></el-input>
+          <el-date-picker
+            v-model="book.comeupTime"
+            type="datetime"
+            style="width:100%"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="选择日期时间">
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="出版社：" prop="publishCompany">
           <el-input v-model="book.publishCompany" ></el-input>
         </el-form-item>
-        <el-form-item label="是否借出：" prop="max">
-          <el-input v-model="book.state" ></el-input>
+        <el-form-item v-if="type == 'edit'" label="是否借出：" style="text-align: left">
+          <el-radio-group v-model="book.state" >
+            <el-radio :label="true">是</el-radio>
+            <el-radio :label="false">否</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="入库者：" prop="enteringMen">
-          <el-input v-model="book.enteringMen" ></el-input>
+        <el-form-item v-if="type == 'edit'" label="入库者：">
+          <el-input v-model="book.enteringMen" disabled></el-input>
         </el-form-item>
-        <el-form-item label="入库日期：" prop="enteringDate">
-          <el-input v-model="book.enteringDate" ></el-input>
+        <el-form-item v-if="type == 'edit'" label="入库日期：">
+          <el-input v-model="book.enteringDate" disabled></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -83,12 +92,6 @@
             ],
             publishCompany: [
               {required: true, message: '请输入出版社', trigger: 'blur'}
-            ],
-            enteringMen: [
-              {required: true, message: '请输入入库人', trigger: 'blur'}
-            ],
-            enteringDate: [
-              {required: true, message: '请输入入库时间', trigger: 'blur'}
             ]
           }
         }
@@ -151,7 +154,7 @@
         },
         Edit: function () {
           let array = {}
-          array.bookId = this.bookId
+          array.id = this.bookId
           array.bookNumber = this.book.bookNumber
           array.bookName = this.book.bookName
           array.author = this.book.author
@@ -169,7 +172,6 @@
         },
         Add: function () {
           let array = {}
-          array.bookId = this.bookId
           array.bookNumber = this.book.bookNumber
           array.bookName = this.book.bookName
           array.author = this.book.author
@@ -177,16 +179,27 @@
           array.isbnCode = this.book.isbnCode
           array.comeupTime = this.book.comeupTime
           array.publishCompany = this.book.publishCompany
-          array.state = this.book.state
+          array.state = 1
           array.enteringMen = this.userInfo.adName
           BookApi.addBook(array).then(res => {
             console.log(res.data.message)
             this.$parent.initTableData()
           })
         },
-        onCancel(formName) {
+        onCancel() {
           this.$refs['form'].resetFields();
           this.$emit('onCancel')
+          this.clearData()
+        },
+        clearData: function () {
+          this.book.bookNumber = ''
+          this.book.bookName = ''
+          this.book.author = ''
+          this.book.translator = ''
+          this.book.isbnCode = ''
+          this.book.comeupTime = ''
+          this.book.publishCompany = ''
+          this.book.state = ''
         }
       }
     }

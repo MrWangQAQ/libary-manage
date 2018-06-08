@@ -19,4 +19,6 @@ public interface BookAdminService extends BaseService{
     int addBookAdmin(Map input);
 
     int getTotalCount();
+
+    int changePassword(Map input);
 }

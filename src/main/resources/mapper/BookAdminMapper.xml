@@ -62,7 +62,7 @@
   </update>
   <update id="changePassword" parameterType="com.example.libarymanage.entity.BookAdmin">
     update book_admin
-    set ad_password = #{password,jdbcType=VARCHAR}
+    set ad_password = #{adPassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectById" parameterType="java.lang.Integer" resultType="com.example.libarymanage.entity.BookAdmin">

@@ -8,6 +8,7 @@ import io.swagger.models.auth.In;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Book;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,5 +67,22 @@ public class BookAdminServiceImpl implements BookAdminService {
     @Override
     public int getTotalCount(){
         return bookAdminMapper.getTotalCount();
+    }
+
+    @Override
+    public int changePassword(Map input){
+        BookAdmin bookAdmin = new BookAdmin();
+        PasswordUtil passwordUtil = new PasswordUtil();
+        String password = input.get("password").toString();
+        String truePassword = input.get("truePassword").toString();
+        Boolean status = passwordUtil.verify(password, truePassword);
+        if(status){
+            String newPassword = passwordUtil.generate(input.get("newPassword").toString());
+            bookAdmin.setAdPassword(newPassword);
+            bookAdmin.setId(Integer.parseInt(input.get("id").toString()));
+            return bookAdminMapper.changePassword(bookAdmin);
+        } else {
+            return 0;
+        }
     }
 }

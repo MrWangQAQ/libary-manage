@@ -72,7 +72,7 @@
   </select>
   <select id="selectUserInfoById" parameterType="java.lang.Integer" resultType="com.example.libarymanage.entity.dto.UserList">
     SELECT
-    user_info.id id,
+    user_info.id  userInfoId,
     user_id,
     user_number,
     `user`.user_name user_name,

@@ -59,4 +59,22 @@
     password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getUserByNumber" parameterType="java.lang.String" resultType="com.example.libarymanage.entity.dto.UserList">
+      SELECT
+      user_info.id  id,
+      user_id,
+      user_number,
+      `user`.user_name user_name,
+      departments,
+      major,
+      phone,
+      email,
+      max,
+      time,
+      lended_num
+      FROM
+      user_info
+      LEFT JOIN user ON user.id = user_info.user_id
+    where user_number = #{user_Number}
+  </select>
 </mapper>

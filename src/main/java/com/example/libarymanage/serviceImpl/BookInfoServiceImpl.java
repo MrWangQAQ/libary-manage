@@ -48,4 +48,25 @@ public class BookInfoServiceImpl implements BookInfoService {
     public BookInfo selectBookById(Integer id){
         return bookInfoMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int backBook(int bookId){
+        BookInfo bookInfo = new BookInfo();
+        bookInfo.setId(bookId);
+        bookInfo.setState(true);
+        return bookInfoMapper.backBook(bookInfo);
+    }
+
+    @Override
+    public BookInfo getBookByNumber(String bookNumber){
+        return bookInfoMapper.getBookByNumber(bookNumber);
+    }
+
+    @Override
+    public int borrowBook(int bookId){
+        BookInfo bookInfo = new BookInfo();
+        bookInfo.setId(bookId);
+        bookInfo.setState(false);
+        return bookInfoMapper.borrowBook(bookInfo);
+    }
 }

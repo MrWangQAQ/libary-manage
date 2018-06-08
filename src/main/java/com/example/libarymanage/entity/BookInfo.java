@@ -1,5 +1,7 @@
 package com.example.libarymanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BookInfo {
@@ -96,6 +98,7 @@ public class BookInfo {
         this.isbnCode = isbnCode == null ? null : isbnCode.trim();
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getComeupTime() {
         return comeupTime;
     }
@@ -128,6 +131,7 @@ public class BookInfo {
         this.enteringMen = enteringMen == null ? null : enteringMen.trim();
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getEnteringDate() {
         return enteringDate;
     }

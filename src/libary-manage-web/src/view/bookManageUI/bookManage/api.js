@@ -14,6 +14,6 @@ export class BookApi {
     return server.connection('POST', '/bookInfo/editBook', data)
   }
   static selectBookById (id) {
-    return server.connection('POST', '/bookInfo/selectBookById', {id})
+    return server.connection('GET', '/bookInfo/selectBookById', {id})
   }
 }

@@ -1,6 +1,8 @@
 package com.example.libarymanage.dao.mapper;
 
 import com.example.libarymanage.entity.User;
+import com.example.libarymanage.entity.dto.UserList;
+
 import java.util.List;
 
 public interface UserMapper {
@@ -21,4 +23,6 @@ public interface UserMapper {
     int getTotalCount();
 
     int changePassword(User record);
+
+    UserList getUserByNumber(String userNumber);
 }

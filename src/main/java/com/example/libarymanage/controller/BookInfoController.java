@@ -79,4 +79,13 @@ public class BookInfoController {
         jsonResult.setData(bookInfo);
         return jsonResult;
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/getBookByNumber")
+    public JSONResult getBookByNumber(@RequestBody @Valid Map input) {
+        JSONResult jsonResult = new JSONResult<>();
+        BookInfo bookInfo = bookInfoService.getBookByNumber(input.get("bookNumber").toString());
+        jsonResult.setData(bookInfo);
+        return jsonResult;
+    }
+
 }

@@ -33,7 +33,7 @@
           <el-table-column
             prop="comeupTime"
             label="出版日期"
-            min-width="100">
+            min-width="150">
           </el-table-column>
           <el-table-column
             prop="publishCompany"
@@ -41,9 +41,12 @@
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="state"
             label="是否借出"
             min-width="100">
+            <template slot-scope="scope">
+                <p v-if="status">是</p>
+                <p v-else>否</p>
+            </template>
           </el-table-column>
           <el-table-column
             prop="enteringMen"
@@ -53,7 +56,7 @@
           <el-table-column
             prop="enteringDate"
             label="入库时间"
-            min-width="100">
+            min-width="150">
           </el-table-column>
           <el-table-column label="操作" min-width="200">
             <template slot-scope="scope">
@@ -75,7 +78,7 @@
           :dialog_title="dialog_title"
           :dialogVisible="dialogVisible"
           :type="type"
-          :userId="bookId"
+          :bookId="bookId"
           @onCancel="onCancel"
           @submit="submit"
         ></book_manage_dialog>

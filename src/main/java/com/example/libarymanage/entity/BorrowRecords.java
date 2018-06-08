@@ -1,5 +1,7 @@
 package com.example.libarymanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BorrowRecords {
@@ -9,8 +11,6 @@ public class BorrowRecords {
 
     private Integer bookId;
 
-    private String bookName;
-
     private Date borrowTime;
 
     private Date shouldTime;
@@ -19,13 +19,24 @@ public class BorrowRecords {
 
     private Boolean state;
 
-    public BorrowRecords(Integer id, Integer userId, Integer bookId, String bookName, Date borrowTime, Date shouldTime, Date returnTime, Boolean state) {
+    public BorrowRecords(Integer id, Integer userId, Integer bookId, Date borrowTime, Date shouldTime, Date returnTime, Boolean state) {
         this.id = id;
         this.userId = userId;
         this.bookId = bookId;
-        this.bookName = bookName;
         this.borrowTime = borrowTime;
         this.shouldTime = shouldTime;
+        this.returnTime = returnTime;
+        this.state = state;
+    }
+
+    public BorrowRecords(Integer userId, Integer bookId, Date borrowTime, Date shouldTime) {
+        this.userId = userId;
+        this.bookId = bookId;
+        this.borrowTime = borrowTime;
+        this.shouldTime = shouldTime;
+    }
+
+    public BorrowRecords( Date returnTime, Boolean state) {
         this.returnTime = returnTime;
         this.state = state;
     }
@@ -58,14 +69,7 @@ public class BorrowRecords {
         this.bookId = bookId;
     }
 
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName == null ? null : bookName.trim();
-    }
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getBorrowTime() {
         return borrowTime;
     }
@@ -74,6 +78,7 @@ public class BorrowRecords {
         this.borrowTime = borrowTime;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getShouldTime() {
         return shouldTime;
     }
@@ -82,6 +87,7 @@ public class BorrowRecords {
         this.shouldTime = shouldTime;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getReturnTime() {
         return returnTime;
     }
