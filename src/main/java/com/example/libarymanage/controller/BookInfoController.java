@@ -36,6 +36,20 @@ public class BookInfoController {
         return jsonResult;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getListByBookName")
+    public JSONResult getListByBookName(int page, int pageSize, String bookName) {
+        JSONResult jsonResult = new JSONResult<>();
+        Map input = new HashMap();
+        input.put("page", page);
+        input.put("pageSize", pageSize);
+        input.put("bookName", bookName);
+        List<BookInfo> bookInfoList = bookInfoService.getListByBookName(input);
+        jsonResult.setData(bookInfoList);
+        int totalCount = bookInfoService.getTotalCount();
+        jsonResult.setTotalCount(totalCount);
+        return jsonResult;
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/addBook")
     public JSONResult addBook(@RequestBody @Valid BookInfo bookInfo) {
         JSONResult jsonResult = new JSONResult<>();

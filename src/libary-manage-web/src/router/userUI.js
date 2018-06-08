@@ -18,5 +18,9 @@ export default[
   {
     path: 'borrowedRecord',
     component: () => import('../view/userUI/borrowedRecord')
+  },
+  {
+    path: 'homePage',
+    component: () => import('../view/userUI/homePage')
   }
 ]

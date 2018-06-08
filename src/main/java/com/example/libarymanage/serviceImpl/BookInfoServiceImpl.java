@@ -25,6 +25,11 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
+    public List<BookInfo> getListByBookName(Map input){
+        return bookInfoMapper.getListByBookName(input);
+    }
+
+    @Override
     public int getTotalCount(){
         return bookInfoMapper.getTotalCount();
     }

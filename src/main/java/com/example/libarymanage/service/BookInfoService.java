@@ -8,6 +8,8 @@ import java.util.Map;
 public interface BookInfoService extends BaseService{
     List<BookInfo> getList(Map input);
 
+    List<BookInfo> getListByBookName(Map input);
+
     int getTotalCount();
 
     int addBook(BookInfo bookInfo);

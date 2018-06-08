@@ -21,4 +21,8 @@ export class UserUIApi {
   static getBookByNumber (data) {
     return server.connection('GET', '/borrowManage/getBookByNumber', data)
   }
+
+  static getBookList (data) {
+    return server.connection('GET', '/bookInfo/getListByBookName', data)
+  }
 }

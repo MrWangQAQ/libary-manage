@@ -19,6 +19,8 @@ public interface BookInfoMapper {
 
     List<BookInfo> getList(Map input);
 
+    List<BookInfo> getListByBookName(Map input);
+
     int getTotalCount();
 
     int backBook(BookInfo record);

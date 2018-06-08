@@ -65,6 +65,14 @@
     LIMIT ${(page-1)*pageSize},
     #{pageSize}
   </select>
+  <select id="getListByBookName" parameterType="java.util.Map" resultType="com.example.libarymanage.entity.BookInfo">
+    select id, book_name, book_number, author, translator, isbn_code, comeup_time, publish_company,
+    state, entering_men, entering_date
+    from book_info
+    where book_name LIKE  concat("%",IFNULL(#{bookName}, ''), "%")
+    LIMIT ${(page-1)*pageSize},
+    #{pageSize}
+  </select>
   <select id="getTotalCount" resultType="java.lang.Integer">
     select count(*) totalCount
     from book_info

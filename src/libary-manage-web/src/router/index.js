@@ -25,7 +25,8 @@ export default new Router({
       name: 'bookManageUI',
       component: () => import('../packages/ui/container'),
       children: [
-        ...bookManageUI
+        ...bookManageUI,
+
       ]
     },
     {
