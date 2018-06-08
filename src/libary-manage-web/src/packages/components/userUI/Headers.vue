@@ -2,7 +2,7 @@
   <div class="header" style="background-color: #409eff">
     <el-row>
       <el-col :span="8" style="text-align: left;padding-left: 80px;">
-        <router-link class="head-link head-fontSize hoverHead" to="userUI/homePage"><i class="el-icon-menu"></i>首页</router-link>
+        <router-link class="head-link head-fontSize hoverHead" to="/userUI/homePage"><i class="el-icon-menu"></i>首页</router-link>
       </el-col>
       <el-col :span="8"><span class="head-fontSize">个人中心</span></el-col>
       <el-col :span="8" style="text-align: right;padding-right: 40px;">
